@@ -8,7 +8,7 @@ import os
 
 from fastapi import FastAPI, Query, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 
 # Add parent directory to path so we can import our modules
@@ -19,6 +19,17 @@ import httpx
 
 app = FastAPI(title="CMS Detection API", version="1.0.0")
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
+
+_PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
+@app.get("/", response_class=HTMLResponse)
+async def root():
+    """Serve the interactive API documentation page."""
+    index_path = os.path.join(_PROJECT_ROOT, "public", "index.html")
+    with open(index_path) as f:
+        return f.read()
+
 
 # --- Rate limiting (configurable via environment variable) ---
 RATE_LIMIT_RPM = int(os.environ.get("RATE_LIMIT_RPM", "30"))
@@ -137,8 +148,3 @@ async def detect(
     }
 
 
-# Serve public/ at root for local development.
-# On Vercel, public/ is served automatically before the function runs.
-_public_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "public")
-if os.path.isdir(_public_dir):
-    app.mount("/", StaticFiles(directory=_public_dir, html=True), name="static")
