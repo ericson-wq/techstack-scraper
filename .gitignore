@@ -71,3 +71,4 @@ dmypy.json
 .pytype/
 cython_debug/
 .vercel/
+.vercel
