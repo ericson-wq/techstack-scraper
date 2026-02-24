@@ -111,6 +111,59 @@ section h2 { font-size: 1.4rem; margin-bottom: 1rem; color: #1a1a2e; }
 .confidence-yellow { background: #ca8a04; }
 .confidence-red { background: #dc2626; }
 
+/* Info tooltip */
+.info-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #d1d5db;
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  font-style: normal;
+  cursor: help;
+  position: relative;
+  flex-shrink: 0;
+  margin-left: 4px;
+  line-height: 1;
+}
+.info-icon:hover { background: #9ca3af; }
+.info-tooltip {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1a1a2e;
+  color: #e5e7eb;
+  font-size: 0.78rem;
+  font-weight: 400;
+  line-height: 1.5;
+  padding: 0.65rem 0.85rem;
+  border-radius: 8px;
+  width: 300px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+  z-index: 10;
+  pointer-events: none;
+}
+.info-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: #1a1a2e;
+}
+.info-icon:hover .info-tooltip { display: block; }
+@media (max-width: 640px) {
+  .info-tooltip { left: auto; right: -8px; transform: none; }
+  .info-tooltip::after { left: auto; right: 12px; transform: none; }
+}
+
 .signals-list {
   list-style: none;
   display: flex;
@@ -471,7 +524,14 @@ vercel --prod                        # redeploy to apply</pre>
 
     // Confidence
     if (cms) {
-      html += '<div class="result-row"><span class="result-label">Confidence</span>';
+      html += '<div class="result-row"><span class="result-label">Confidence';
+      html += '<span class="info-icon" aria-label="How confidence is calculated">i';
+      html += '<span class="info-tooltip">';
+      html += '<strong>How is this calculated?</strong><br>';
+      html += 'We scan HTTP headers, meta tags, cookies, scripts, and HTML patterns for CMS-specific signals. ';
+      html += 'Each signal has a weight based on how reliable it is. ';
+      html += 'The confidence score is the percentage of matched signal weight out of the maximum possible for that CMS.';
+      html += '</span></span></span>';
       html += '<div class="confidence-bar-wrap"><div class="confidence-bar ' + barClass + '" style="width:' + conf + '%">' + conf + '%</div></div>';
       html += '</div>';
     }
