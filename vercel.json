@@ -11,11 +11,5 @@
         { "key": "Access-Control-Allow-Headers", "value": "Content-Type" }
       ]
     }
-  ],
-  "functions": {
-    "api/*.py": {
-      "maxDuration": 30,
-      "memory": 512
-    }
-  }
+  ]
 }
