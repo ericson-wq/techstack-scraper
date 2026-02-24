@@ -8,16 +8,23 @@ import os
 
 from fastapi import FastAPI, Query, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import HTMLResponse, JSONResponse
 
 # Add parent directory to path so we can import our modules
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from detector import normalize_domain, fetch_page, detect_cms
+from _docs_html import INDEX_HTML
 import httpx
 
 app = FastAPI(title="CMS Detection API", version="1.0.0")
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
+
+
+@app.get("/", response_class=HTMLResponse)
+async def root():
+    """Serve the interactive API documentation page."""
+    return INDEX_HTML
 
 
 # --- Rate limiting (configurable via environment variable) ---
