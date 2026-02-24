@@ -13,7 +13,7 @@
     }
   ],
   "functions": {
-    "api/detect.py": {
+    "api/*.py": {
       "maxDuration": 30,
       "memory": 512
     }
