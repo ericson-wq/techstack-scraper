@@ -23,7 +23,8 @@ body {
   padding: 3rem 1.5rem 2.5rem;
   text-align: center;
 }
-.header h1 { font-size: 2.2rem; font-weight: 700; margin-bottom: 0.4rem; }
+.header h1 { font-size: 2.2rem; font-weight: 700; margin-bottom: 0.4rem; display: flex; align-items: center; justify-content: center; gap: 0.6rem; }
+.header h1 img { height: 2.2rem; width: auto; border-radius: 50%; }
 .header .tagline { color: #a0a0c0; font-size: 1.05rem; margin-bottom: 1rem; }
 .header .base-url {
   display: inline-block;
@@ -265,6 +266,26 @@ code {
 .cms-card:hover { border-color: #2563eb; box-shadow: 0 2px 8px rgba(37,99,235,0.12); }
 .cms-card .cms-icon { font-size: 1.5rem; margin-bottom: 0.3rem; }
 
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 2rem 1.5rem 2.5rem;
+  color: #888;
+  font-size: 0.85rem;
+}
+.footer .trademark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #555;
+  font-weight: 600;
+}
+.footer .trademark img {
+  height: 1.2rem;
+  width: auto;
+  border-radius: 50%;
+}
+
 /* Responsive */
 @media (max-width: 640px) {
   .header h1 { font-size: 1.6rem; }
@@ -281,7 +302,7 @@ code {
 
 <!-- Header -->
 <div class="header">
-  <h1>CMS Detection API</h1>
+  <h1><img src="/logo.png" alt="Lead Assassin logo">CMS Detection API</h1>
   <p class="tagline">Detect the CMS behind any website in milliseconds</p>
   <span class="base-url" id="base-url"></span>
 </div>
@@ -413,25 +434,7 @@ code {
         </tbody>
       </table>
     </div>
-    <p style="color:#555; margin-top:0.75rem;">Default limit: <strong>30 requests per minute</strong>. When exceeded, the API returns HTTP <code>429</code>.</p>
-  </section>
-
-  <!-- Configuration -->
-  <section>
-    <h2>Configuration</h2>
-    <p style="color:#555; margin-bottom:0.75rem;">Adjust API behavior via environment variables in your Vercel project settings:</p>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>Variable</th><th>Default</th><th>Description</th></tr></thead>
-        <tbody>
-          <tr><td><code>RATE_LIMIT_RPM</code></td><td><code>30</code></td><td>Max requests per minute per IP. Set to <code>0</code> to disable rate limiting.</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <h3 style="font-size:0.95rem; margin-top:1rem; margin-bottom:0.4rem;">Setting in Vercel</h3>
-    <pre>vercel env add RATE_LIMIT_RPM       # then enter your value, e.g. 60
-vercel --prod                        # redeploy to apply</pre>
-    <p style="color:#555; margin-top:0.75rem;">Or set it in the Vercel Dashboard under <strong>Settings &rarr; Environment Variables</strong>.</p>
+    <p style="color:#555; margin-top:0.75rem;">Default limit: <strong>5 requests per 60 seconds</strong>. When exceeded, the API returns HTTP <code>429</code>.</p>
   </section>
 
   <!-- Supported CMS Platforms -->
@@ -441,6 +444,10 @@ vercel --prod                        # redeploy to apply</pre>
     <div class="cms-grid" id="cms-grid"></div>
   </section>
 
+</div>
+
+<div class="footer">
+  Built and powered by <span class="trademark"><img src="/logo.png" alt="Lead Assassin logo">Lead Assassin&trade;</span>
 </div>
 
 <script>

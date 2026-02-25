@@ -28,7 +28,7 @@ async def root():
 
 
 # --- Rate limiting (configurable via environment variable) ---
-RATE_LIMIT_RPM = int(os.environ.get("RATE_LIMIT_RPM", "30"))
+RATE_LIMIT_RPM = int(os.environ.get("RATE_LIMIT_RPM", "5"))
 _rate_store: dict[str, list[float]] = collections.defaultdict(list)
 _rate_lock = threading.Lock()
 
